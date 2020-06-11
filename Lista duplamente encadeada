@@ -150,3 +150,5 @@ def adicionar_clientes():
 def adicionar_funcionarios():
     funcionarios.append(input("Novo funcionário"))
     # ...
+
+principal()
