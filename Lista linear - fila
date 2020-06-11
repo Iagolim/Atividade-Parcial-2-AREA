@@ -1,0 +1,103 @@
+class Queue:
+
+    def __init__(self):
+        self.queue = []
+        self.len_queue = 0
+
+    def push(self, e):
+        self.queue.append(e)
+        self.len_queue += 1
+
+    def listar(self):
+        for e in self.queue:
+            print("\n" + e)
+
+    def pop(self):
+        if not self.empty():
+            self.queue.pop(0)
+            self.len_queue -= 1
+
+    def empty(self):
+        if self.len_queue == 0:
+            return True
+        return False
+
+    def length(self):
+        return self.len_queue
+
+    def front(self):
+        if not self.empty():
+            return self.queue[0]
+        return None
+
+    def show(self):
+
+        curr_node = self.first
+        print(1 * '-')
+        print('')
+        while curr_node != None:
+
+            print(curr_node.getNome(), end=5*' ')
+            print(curr_node.getIdade(), end=' ' + 'Anos')
+            print('')
+            curr_node = curr_node.getNext()
+        print('')
+
+q = Queue()
+x = 1
+
+alimentos = []
+clientes = []
+funcionarios = []
+
+
+def menu(titulo, opcoes):
+    global i
+    while True:
+        print("=" * len(titulo), titulo, "=" * len(titulo), sep="\n")
+        for i, (opcao, funcao) in enumerate(opcoes, 1):
+            print("[{}] - {}".format(i, opcao))
+        print("[{}] - Retornar/Sair".format(i + 1))
+        op = input("Opção: ")
+        if op.isdigit():
+            if int(op) == i + 1:
+                # Encerra este menu e retorna a função anterior
+                break
+            if int(op) < len(opcoes):
+                # Chama a função do menu:
+                opcoes[int(op) - 1][1]()
+                continue
+        print("Opção inválida. \n\n")
+
+
+def principal():
+    opcoes = [
+        ("Adicionar", adicionar),
+        ("Listar", listar),
+        ("Procurar", procurar)
+    ]
+    return menu("Mercado", opcoes)
+
+
+def adicionar():
+    opcoes = [
+        ("Alimentos", adicionar_alimentos),
+        ("Clientes", adicionar_clientes),
+        ("Funcionários", adicionar_funcionarios)
+        # ...
+    ]
+    return menu("Adicionar", opcoes)
+
+
+def adicionar_alimentos():
+    alimentos.append(input("Novo alimento: "))
+
+
+def adicionar_clientes():
+    clientes.append(input("Novo cliente: "))
+
+
+def adicionar_funcionarios():
+    funcionarios.append(input("Novo funcionário"))
+    
+    principal()
