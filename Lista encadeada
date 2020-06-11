@@ -1,0 +1,131 @@
+class Node:
+
+    def __init__(self, label):
+        self.label = label
+        self.next = None
+
+    def getLabel(self):
+        return self.label
+
+    def setLabel(self, label):
+        self.label = label
+
+    def getNext(self):
+        return self.next
+
+    def setNext(self, next):
+        self.next = next
+
+        class LinkedList:
+
+            def __init__(self):
+                self.first = None
+                self.last = None
+                self.len_list = 0
+
+            def push(self, label, index):
+
+                if index >= 0:
+
+                    # cria o novo nó
+                    node = Node(label)
+
+                    # verifica se a lista está vazia
+                    if self.empty():
+                        self.first = node
+                        self.last = node
+                    else:
+
+                        if index == 0:
+                            # inserção no início
+                            node.setNext(self.first)
+                            self.first = node
+                        elif index >= self.len_list:
+                            # inserção ao final
+                            self.last.setNext(node)
+                            self.last = node
+                        else:
+                            # inserção no meio
+                            prev_node = self.first
+                            curr_node = self.first.getNext()
+                            curr_index = 1
+
+                            while curr_node != None:
+
+                                if curr_index == index:
+                                    # seta o curr_node como o próximo do nó
+                                    node.setNext(curr_node)
+                                    # seta o node como o próximo do prev_nodes
+                                    prev_node.setNext(node)
+
+                                prev_node = curr_node
+                                curr_node = curr_node.getNext()
+                                curr_index += 1
+
+                    # atualiza o tamanho da lista
+                    self.len_list += 1
+
+            def pop(self, index):
+
+                if not self.empty() and index >= 0 and index < self.len_list:
+                    flag_remove = False
+
+            def empty(self):
+                pass
+
+
+alimentos = []
+clientes = []
+funcionarios = []
+
+
+def menu(titulo, opcoes):
+    global i
+    while True:
+        print("=" * len(titulo), titulo, "=" * len(titulo), sep="\n")
+        for i, (opcao, funcao) in enumerate(opcoes, 1):
+            print("[{}] - {}".format(i, opcao))
+        print("[{}] - Retornar/Sair".format(i + 1))
+        op = input("Opção: ")
+        if op.isdigit():
+            if int(op) == i + 1:
+                # Encerra este menu e retorna a função anterior
+                break
+            if int(op) < len(opcoes):
+                # Chama a função do menu:
+                opcoes[int(op) - 1][1]()
+                continue
+        print("Opção inválida. \n\n")
+
+
+def principal():
+    opcoes = [
+        ("Adicionar", adicionar),
+        ("Listar", listar),
+        ("Procurar", procurar)
+    ]
+    return menu("Mercado", opcoes)
+
+
+def adicionar():
+    opcoes = [
+        ("Alimentos", adicionar_alimentos),
+        ("Clientes", adicionar_clientes),
+        ("Funcionários", adicionar_funcionarios)
+        # ...
+    ]
+    return menu("Adicionar", opcoes)
+
+
+def adicionar_alimentos():
+    alimentos.append(input("Novo alimento: "))
+
+
+def adicionar_clientes():
+    clientes.append(input("Novo cliente: "))
+
+
+def adicionar_funcionarios():
+    funcionarios.append(input("Novo funcionário"))
+    
+    principal()
